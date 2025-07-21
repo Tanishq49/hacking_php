@@ -1,4 +1,4 @@
-# 🌐 PHP Learning Playground by Tanishq Bhandari
+# 🌐 PHP Learning Playground by Tanishq49
 
 Welcome to the **PHP Practice Repository**, a curated collection of foundational PHP scripts created by **Tanishq49 (aka Trifalic Hacker)**.
 
