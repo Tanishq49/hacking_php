@@ -63,7 +63,7 @@ or any other file.
 Have questions, ideas, or want to collaborate?
 
 * 📧 **Email**: [nottanishqbhandari@gmail.com](mailto:nottanishqbhandari@gmail.com)
-* 💬 **Discord**: `Tanishq#0001`
+* 💬 **Discord**: `Tanishq`
 * 🧠 **Alias**: Trifalic Hacker
 * 🐙 **GitHub**: [@Tanishq49](https://github.com/Tanishq49)
 
