@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Get the country capital</title>
+  <title>Get the country capital Made by - Trifalic Hacker</title>
   <style>
     /* Reset */
     * {
