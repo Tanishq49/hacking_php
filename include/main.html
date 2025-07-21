@@ -76,15 +76,17 @@
         <div class="repo-header">
             <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="Repo Icon" class="repo-icon">
             <span class="repo-title">my-repository</span>
+            <span style="margin-left:16px; color:#c9d1d9; font-size:1rem;">GitHub: <b>Tanishq49</b></span>
         </div>
         <div class="code-section">
 <pre>
-<span style="color:#7ee787;">// Example code block</span>
+<span style="color:#7ee787;">// Welcome to the world of programming</span>
 <span style="color:#d2a8ff;">function</span> <span style="color:#79c0ff;">helloWorld</span>() {
     <span style="color:#a5d6ff;">console</span>.log(<span style="color:#ffa657;">'Hello, World!'</span>);
 }
 </pre>
         </div>
+        <canvas id="coolCanvas" width="800" height="200" style="margin-top:24px; border-radius:8px; background:#21262d; box-shadow:0 2px 8px rgba(0,0,0,0.2);"></canvas>
         <div class="action-bar">
             <button class="action-btn">Edit</button>
             <button class="action-btn">Copy</button>
@@ -92,4 +94,38 @@
         </div>
     </div>
 </body>
+<script>
+const canvas = document.getElementById('coolCanvas');
+const ctx = canvas.getContext('2d');
+const balls = [];
+const colors = ['#58a6ff','#ffa657','#7ee787','#d2a8ff','#ff7b72','#c9d1d9'];
+for(let i=0;i<20;i++){
+    balls.push({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height,
+        r: 16+Math.random()*16,
+        dx: (Math.random()-0.5)*4,
+        dy: (Math.random()-0.5)*4,
+        color: colors[Math.floor(Math.random()*colors.length)]
+    });
+}
+function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for(const b of balls){
+        ctx.beginPath();
+        ctx.arc(b.x,b.y,b.r,0,2*Math.PI);
+        ctx.fillStyle = b.color;
+        ctx.shadowColor = b.color;
+        ctx.shadowBlur = 16;
+        ctx.fill();
+        b.x += b.dx;
+        b.y += b.dy;
+        if(b.x-b.r<0||b.x+b.r>canvas.width) b.dx*=-1;
+        if(b.y-b.r<0||b.y+b.r>canvas.height) b.dy*=-1;
+    }
+    ctx.shadowBlur = 0;
+    requestAnimationFrame(draw);
+}
+draw();
+</script>
 </html>
