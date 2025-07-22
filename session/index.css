@@ -1,0 +1,100 @@
+:root {
+  --bg: #18181b;
+  --card-bg: #23232a;
+  --accent: #6366f1;
+  --input-bg: #2a2a35;
+  --text: #f3f4f6;
+  --error: #ef4444;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", "Roboto", Arial, sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.login-card {
+  background: var(--card-bg);
+  padding: 2.5rem 2rem;
+  border-radius: 1.2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  width: 100%;
+  max-width: 370px;
+  animation: fadeInUp 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.login-card h2 {
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-align: center;
+}
+.form-group {
+  margin-bottom: 1.2rem;
+}
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 0.7rem;
+  background: var(--input-bg);
+  color: var(--text);
+  font-size: 1rem;
+  transition: box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.07);
+  transform: translateX(-10px);
+}
+input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.login-btn {
+  width: 100%;
+  padding: 0.85rem 0;
+  background: linear-gradient(90deg, var(--accent) 0%, #3b82f6 100%);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.7rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.15);
+}
+.login-btn:hover {
+  background: linear-gradient(90deg, #3b82f6 0%, var(--accent) 100%);
+  transform: translateY(-2px) scale(1.03);
+}
+.login-card .footer {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #a1a1aa;
+}
+.login-card .footer a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: text-decoration 0.2s;
+}
+.login-card .footer a:hover {
+  text-decoration: underline;
+}
