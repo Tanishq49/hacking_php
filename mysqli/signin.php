@@ -1,38 +1,31 @@
 <?php
 session_start();
-
 try {
-    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["submit"])) {
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
+        include("./db.php");
         $name = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_SPECIAL_CHARS);
         $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
+
+        //Hashing the password
         $hash = password_hash($password, PASSWORD_DEFAULT);
 
-        include("./db.php");
-
-        // Check if username or email already exists
-        $check_sql = "SELECT * FROM trial WHERE username='$name' OR email='$email'";
-        $check_result = mysqli_query($conn, $check_sql);
-
-        if (mysqli_num_rows($check_result) > 0) {
-            echo "Name or Email already registered";
+        //Making the sql query to check the name and the email if exists..
+        $sql = "SELECT * FROM trial WHERE username='$name' OR email='$email'";
+        $connection = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($connection) == 0) {
+            $_SESSION["username"] = $name;
+            $_SESSION["email"] = $email;
+            $sql1 = "INSERT INTO `trial` (`S.No`, `username`, `email`, `password`) VALUES (NULL, '$name', '$email', '$hash')";
+            $result = mysqli_query($conn, $sql1);
+            header("Location: home.php");
         } else {
-            $sql = "INSERT INTO `trial` (`S.No`, `username`, `email`, `password`) VALUES (NULL, '$name', '$email', '$hash')";
-            if (mysqli_query($conn, $sql)) {
-                $_SESSION["username"] = $name;
-                $_SESSION["email"] = $email;
-                $_SESSION["password"] = $hash;
-                header("Location: home.php");
-                exit();
-            } else {
-                echo "<script>alert('❌ Failed to register. Try again later.');</script>";
-            }
+            echo "Name or email already registered";
         }
-
         mysqli_close($conn);
     }
-} catch (mysqli_sql_exception $e) {
-    die("Some error occurred. Please refresh the website. Error: " . $e->getMessage());
+} catch (mysqli_sql_exception) {
+    die("Some error occurred. Please refresh the website");
 }
 ?>
 <!DOCTYPE html>

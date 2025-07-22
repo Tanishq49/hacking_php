@@ -69,7 +69,7 @@
         <h1>You have been logged out.</h1>
         <p>Thank you for using our services. We hope to see you again soon.</p>
         <a href="signin.php"><button class="btn">Login Again</button></a>
-        <a href="homes.php"><button class="btn">Go to Homepage</button></a>
+        <a href="home.php"><button class="btn">Go to Homepage</button></a>
 
         <div class="privacy">
             <h3>Privacy Policy</h3>
