@@ -1,10 +1,47 @@
+<?php
+session_start();
+
+try {
+    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["submit"])) {
+        $name = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
+        $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_SPECIAL_CHARS);
+        $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+
+        include("./db.php");
+
+        // Check if username or email already exists
+        $check_sql = "SELECT * FROM trial WHERE username='$name' OR email='$email'";
+        $check_result = mysqli_query($conn, $check_sql);
+
+        if (mysqli_num_rows($check_result) > 0) {
+            echo "Name or Email already registered";
+        } else {
+            $sql = "INSERT INTO `trial` (`S.No`, `username`, `email`, `password`) VALUES (NULL, '$name', '$email', '$hash')";
+            if (mysqli_query($conn, $sql)) {
+                $_SESSION["username"] = $name;
+                $_SESSION["email"] = $email;
+                $_SESSION["password"] = $hash;
+                header("Location: home.php");
+                exit();
+            } else {
+                echo "<script>alert('❌ Failed to register. Try again later.');</script>";
+            }
+        }
+
+        mysqli_close($conn);
+    }
+} catch (mysqli_sql_exception $e) {
+    die("Some error occurred. Please refresh the website. Error: " . $e->getMessage());
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Signin</title>
     <style>
         /* Animated dark wallpaper using CSS gradients and keyframes */
         body {
@@ -26,6 +63,12 @@
                 radial-gradient(circle at 80% 80%, #4e4376 0%, transparent 60%),
                 linear-gradient(120deg, #232526 0%, #414345 100%);
             animation: moveBg 10s linear infinite alternate;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+
         }
 
         @keyframes moveBg {
@@ -152,11 +195,20 @@
 <body>
     <div class="animated-bg"></div>
     <div class="login-container">
-        <div class="login-title">Login</div>
-        <form class="login-form" method="post" action="">
-            <input type="text" name="username" placeholder="Username" required autocomplete="username">
-            <input type="password" name="password" placeholder="Password" required autocomplete="current-password">
-            <button type="submit" class="login-btn">Sign In</button>
+        <div class="login-title">SignUp</div>
+        <form class="login-form" method="post" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit" class="login-btn" name="submit">Submit</button>
+        </form>
+        <br><br>
+        <form action="login.php" class="login-form">
+            <button type=" submit" class="login-btn" name="login">
+                <a href="login.php">
+                    Already have an account?
+                </a>
+            </button>
         </form>
     </div>
 </body>
